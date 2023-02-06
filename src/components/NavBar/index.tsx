@@ -22,6 +22,7 @@ export const NavBar: FC<INavBarProps> = ({
             </NavBarButton>
             {games.map((game) => (
                 <NavBarButton
+                    key={game.id}
                     onClick={() => {handleClick(game.id)}}
                 >
                     {game.name}

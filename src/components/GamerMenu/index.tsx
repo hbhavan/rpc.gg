@@ -24,6 +24,7 @@ export const GamerMenu: FC<IGamerMenuProps> = ({
                 {!!gamers && gamers.map((gamer) => {
                     return (
                         <MenuItem
+                            key={gamer.id}
                             onClick={() => handleClick(gamer)}
                         >
                             <GamerTag gamer={gamer}/>

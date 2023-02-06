@@ -76,7 +76,7 @@ export const Session: FC<ISessionProps> = ({
                     </HStack>
                     <Divider />
                     {!!gamers && gamers.map((gamer) => (
-                        <HStack padding="2px 8px 2px 2px">
+                        <HStack key={gamer.id} padding="2px 8px 2px 2px">
                             <GamerTag gamer={gamer}/>
                             <Spacer />
                             <SmallCloseIcon 
