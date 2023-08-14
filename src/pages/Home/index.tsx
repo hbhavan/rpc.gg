@@ -1,10 +1,7 @@
 import { useState } from 'react'
-import { NavBar } from '../../components/NavBar'
-import { GameDetails } from '../Games'
-import { gameStore } from '../../stores'
-import { HomeGrid, Title } from './styles'
-
-
+import { NavMenu } from '../../components/NavMenu'
+import { HomeContainer, MainContainer, SubTitle, Title, TitleContainer } from './styles'
+import { Rankings } from './rankings'
 
 export const HomePage = () => {
     const [page, setPage] = useState('')
@@ -14,16 +11,19 @@ export const HomePage = () => {
     }
 
     return (
-        <HomeGrid>
-            <Title>
-                RPC 2023 Friend Points 
-            </Title>  
-            {!!page && page !== 'home' &&
-                <GameDetails game={gameStore.getGame(page)}/>
-            }
-            <NavBar
-                handleClick={handleClick}
-            />
-        </HomeGrid>
+        <HomeContainer>
+            <NavMenu page="home"/>
+            <TitleContainer>
+                <Title>
+                    RPC.GG
+                </Title>  
+                <SubTitle>
+                    2023 Friend Point Rankings
+                </SubTitle>
+            </TitleContainer>
+            <MainContainer>
+                <Rankings />
+            </MainContainer>
+        </HomeContainer>
     )
 }

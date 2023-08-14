@@ -1,30 +1,10 @@
-import { FC } from "react"
-import { Session } from "../../components/SessionBox/Session"
-import { Game } from "../../types/core"
-import { GameDetailsContainer, GameTitle, Sessions } from "./styles"
+import { NavMenu } from '../../components/NavMenu'
+import { MainContainer } from './styles'
 
-
-interface IGamePageProps {
-    game: Game
-}
-
-export const GameDetails: FC<IGamePageProps> = ({
-    game
-}) => {
+export const GamesPage = () => {
     return (
-        <>
-            {!!game.id &&
-                <GameDetailsContainer>
-                    <GameTitle>
-                        {game.name}
-                    </GameTitle>
-                    <Sessions>
-                        <Session
-                            game={game}
-                            eggs={true}
-                        />
-                    </Sessions>
-                </GameDetailsContainer>
-            }
-        </>
-)}
+        <MainContainer>
+            <NavMenu page="games"/>
+        </MainContainer>
+    )
+}

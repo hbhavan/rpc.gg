@@ -1,11 +1,11 @@
-import { Gamer } from "../types/core";
+import { Gamer } from '../types/core'
 
 export class GamerStore {
     public gamers: Gamer[] = [
         {
             id: 'blues',
             name: 'Blues',
-            points: 0,
+            points: 40,
         },
         {
             id: 'dex',
@@ -65,12 +65,12 @@ export class GamerStore {
         {
             id: 'puff',
             name: 'Puff',
-            points: 0,
+            points: 99999,
         },
         {
             id: 'ryuu',
             name: 'Ryuu',
-            points: 0
+            points: 1000
         },
         {
             id: 'soul',

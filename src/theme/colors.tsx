@@ -1,14 +1,13 @@
 export const colors = {
-    black: {
-        100: '#6f6a83',
-        200: '#3e3b4a',
-        300: '#141318',
+    zara: {
+        50: '#939193',   //Zara Gray
+        100: '#BBA59A', //Zara White
+        200: '#A2805E', //Zara Beige
+        300: '#804F28', //Zara Orange
+        400: '#0F0B0A', //Zara Brown
+        500: '#110F10'  //Zara Black
     },
-    white: {
-        100: '#ffffff',
-        200: '#e9e7e7',
-        300: '#bcb8b6'
-    },
+    
     blues: '#bb0a1e',
     dex: '#63656a',
     dom: '#0061e3',
