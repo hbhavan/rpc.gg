@@ -5,14 +5,14 @@ import { Game, Gamer } from "../../types/core"
 import { AddButton } from "./addButton"
 import { GamerSelect } from "./gamerSelect"
 import { GameSelect } from "./gameSelect"
-import { FormContainer, FPFormLabel, FPInput, FPSelect, FPSubmit, InputContainer, InputRow, MainContainer, Title } from "./styles"
+import { FormContainer, FPFormLabel, FPInput, FPSubmit, InputContainer, InputRow, MainContainer, Title } from "./styles"
 
 interface FormValues {
     game: Game,
-    sessions: number,
-    wins: number,
-    losses: number,
-    eggs: number,
+    sessions: string,
+    wins: string,
+    losses: string,
+    eggs: string,
     gamers: Gamer[]
 }
 
@@ -24,13 +24,13 @@ export const FormPage = () => {
     const [selectedGamer, setSelectedGamer] = useState<Gamer[]>([])
     const [formData, setFormData] = useState<FormValues>({
         game: {id: '', name: ''},
-        sessions: 0,
-        wins: 0,
-        losses: 0,
-        eggs: 0,
+        sessions: '',
+        wins: '',
+        losses: '',
+        eggs: '',
         gamers: []
     })
-    const [addEggs, setAddEggs] = useState('0')
+    const [addEggs, setAddEggs] = useState('')
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -48,13 +48,13 @@ export const FormPage = () => {
     }
 
     const handleAddEggsClick = (eggs: string) => {
-        const addEggs = Number(formData.eggs) + Number(eggs)
-        if (typeof addEggs === 'number') {
+        const addEggs = (parseInt(formData.eggs) + parseInt(eggs))
+        if (typeof addEggs === 'number' && addEggs > 0) {
             setFormData({
                 ...formData,
-                eggs: Number(formData.eggs) + Number(eggs)
+                eggs: '' + addEggs
             })
-            setAddEggs('0')
+            setAddEggs('')
         }
     }
 
@@ -74,7 +74,7 @@ export const FormPage = () => {
 
     const handleSubmit = () => {
         let valid = true
-        if (formData.game.id == '') {
+        if (formData.game.id === '') {
             alert("Select a game")
             valid = false
         }
@@ -84,10 +84,10 @@ export const FormPage = () => {
             valid = false
         }
         if (
-            formData.sessions < 0 &&
-            formData.wins < 0 &&
-            formData.losses < 0 &&
-            formData.eggs < 0
+            parseInt(formData.sessions) < 0 &&
+            parseInt(formData.wins) < 0 &&
+            parseInt(formData.losses) < 0 &&
+            parseInt(formData.eggs) < 0
         ) {
             alert("Select a valid number")
             valid = false
@@ -147,7 +147,7 @@ export const FormPage = () => {
                             <AddButton
                                 onClick={() => setFormData({
                                     ...formData,
-                                    sessions: Number(formData.sessions) + 1
+                                    sessions: '' + (parseInt(formData.sessions) + 1)
                                 })} 
                             />
                         </InputRow>
@@ -164,7 +164,7 @@ export const FormPage = () => {
                             <AddButton
                                 onClick={() => setFormData({
                                     ...formData,
-                                    wins: Number(formData.wins) + 1
+                                    wins: '' + (parseInt(formData.wins) + 1)
                                 })} 
                             />
                         </InputRow>
@@ -181,7 +181,7 @@ export const FormPage = () => {
                             <AddButton
                                 onClick={() => setFormData({
                                     ...formData,
-                                    losses: Number(formData.losses) + 1
+                                    losses: '' + (parseInt(formData.losses) + 1)
                                 })} 
                             />
                         </InputRow>

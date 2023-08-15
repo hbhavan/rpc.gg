@@ -1,8 +1,8 @@
-import { Box, Popover, PopoverContent, PopoverTrigger } from '@chakra-ui/react'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Box, Popover, PopoverContent, PopoverTrigger, useDisclosure } from '@chakra-ui/react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { gameStore } from '../../stores'
 import { Game } from '../../types/core'
-import { GamerSelectButton, GamerSelectButtonContainer, GamerSelectOption, GamerSelectText } from './styles'
+import { GamerSelectButton, GamerSelectButtonContainer, GamerSelectOption, GamerSelectPopoverContent, GamerSelectText } from './styles'
 
 interface GameSelectProps {
     selected: Game,
@@ -18,18 +18,16 @@ export const GameSelect: FC<GameSelectProps> = ({
 
     const games = gameStore.getGameList()
 
-    const handleClick = (game: Game) => {
-        setSelected(game)
-        onChange()
-    }
-
     return (
-        <Popover>
+        <Popover
+            onClose={onChange}
+            closeOnBlur
+        >
             <PopoverTrigger>
                 <GamerSelectButton>
                     <GamerSelectButtonContainer>
                         <GamerSelectText
-                            color={selected.id === '' ? 'zara.50' : 'zara.300'}
+                            color={selected.id === '' ? 'zara.50' : 'zara.200'}
                         >
                             {selected.id === '' ?
                                 "Select game" :
@@ -39,19 +37,18 @@ export const GameSelect: FC<GameSelectProps> = ({
                     </GamerSelectButtonContainer>
                 </GamerSelectButton>    
             </PopoverTrigger>    
-            <PopoverContent
-                backgroundColor="zara.500"
-            >
+            <GamerSelectPopoverContent>
                 {games.map((game) => (
                     <GamerSelectOption
                         width="100%"
+                        padding="8px"
                         key={game.id}
                         color={selected === game ? 'zara.100' : 'zara.300' }
                         fontWeight={selected === game ? 'bold' : 'normal'}
-                        onClick={() => handleClick(game)}
+                        onClick={() => setSelected(game)}
                     >
                         {game.name}
                     </GamerSelectOption>))}
-            </PopoverContent>
+            </GamerSelectPopoverContent>
         </Popover>
 )}

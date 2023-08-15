@@ -4,11 +4,6 @@ import { HomeContainer, MainContainer, SubTitle, Title, TitleContainer } from '.
 import { Rankings } from './rankings'
 
 export const HomePage = () => {
-    const [page, setPage] = useState('')
-
-    const handleClick = (page: string) => {
-        setPage(page)    
-    }
 
     return (
         <HomeContainer>

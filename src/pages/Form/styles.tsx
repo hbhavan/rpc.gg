@@ -1,4 +1,4 @@
-import { Flex, Heading, FormLabel, Input, Select, Button, Text } from '@chakra-ui/react'
+import { Flex, Heading, FormLabel, Input, Select, Button, Text, PopoverContent } from '@chakra-ui/react'
 import { chakra } from '../../utils/chakra'
 
 export const MainContainer = chakra(Flex, {
@@ -50,17 +50,10 @@ export const FPFormLabel = chakra(FormLabel, {
     fontSize: '1.5rem'
 })
 
-export const FPSelect = chakra(Select, {
-    borderColor: 'zara.300',
-    focusBorderColor: 'zara.200',
-    color: 'zara.300',
-    background: 'zara.400'
-})
-
 export const FPInput = chakra(Input, {
     borderColor: 'zara.300',
     focusBorderColor: 'zara.200',
-    color: 'zara.300',
+    color: 'zara.200',
     backgroundColor: 'zara.400',
     type: 'number'
 })
@@ -79,7 +72,7 @@ export const FPSubmit = chakra(Button, {
     alignSelf: 'center',
     borderColor: 'zara.300',
     focusBorderColor: 'zara.200',
-    color: 'zara.300',
+    color: 'zara.200',
     backgroundColor: 'zara.400',
     variant: 'outline',
     _hover: {backgroundColor: 'zara.100'}
@@ -114,7 +107,11 @@ export const GamerSelectContainer = chakra(Flex, {
 
 export const GamerSelectText = chakra(Text, {
     textAlign: 'left',
-    color: 'zara.300'
+})
+
+export const GamerSelectPopoverContent = chakra(PopoverContent, {
+    borderColor: "zara.100",
+    borderWidth: "3px",
 })
 
 export const GamerSelectPopoverContainer = chakra(Flex, {
@@ -130,5 +127,6 @@ export const GamerSelectOption = chakra(Flex, {
     backgroundColor: 'zara.500',
     padding: '0.5rem',
     userSelect: 'none',
+    cursor: 'pointer',
     _hover: {backgroundColor: 'zara.200'},
 })

@@ -1,9 +1,9 @@
 import { Flex, Popover, PopoverContent, PopoverTrigger } from '@chakra-ui/react'
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { GamerTag } from '../../components/GamerTag'
 import { gamerStore } from '../../stores'
 import { Gamer } from '../../types/core'
-import { GamerSelectButton, GamerSelectButtonContainer, GamerSelectOption, GamerSelectPopoverContainer, GamerSelectText } from './styles'
+import { GamerSelectButton, GamerSelectButtonContainer, GamerSelectOption, GamerSelectPopoverContainer, GamerSelectPopoverContent, GamerSelectText } from './styles'
 
 interface GamerSelectProps {
     selected: Gamer[],
@@ -40,7 +40,9 @@ export const GamerSelect: FC<GamerSelectProps> = ({
     }
 
     return (
-        <Popover>
+        <Popover
+            onClose={onChange}
+        >
             <PopoverTrigger>
                 <GamerSelectButton>
                     <GamerSelectButtonContainer>
@@ -59,7 +61,7 @@ export const GamerSelect: FC<GamerSelectProps> = ({
                     </GamerSelectButtonContainer>
                 </GamerSelectButton>    
             </PopoverTrigger>    
-            <PopoverContent
+            <GamerSelectPopoverContent
                 backgroundColor="zara.500"
             >
                 <GamerSelectPopoverContainer>
@@ -74,6 +76,6 @@ export const GamerSelect: FC<GamerSelectProps> = ({
                         </GamerSelectOption>
                     ))}
                 </GamerSelectPopoverContainer>
-            </PopoverContent>
+            </GamerSelectPopoverContent>
         </Popover>
 )}
