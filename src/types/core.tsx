@@ -6,15 +6,17 @@ export interface Game {
 export interface Gamer {
     id: string,
     name: string,
+    color: string,
     points: number
 }
 
 export interface Session {
-    id: string,
-    game: Game,
-    rounds: number,
-    gamers: Gamer[],
+    id?: string,
+    gameId: string,
     wins: number,
     losses: number,
-    eggs?: number    
+    eggs: number,  
+    sessions: number,
+    gamers: Gamer[],
+    date: Date
 }

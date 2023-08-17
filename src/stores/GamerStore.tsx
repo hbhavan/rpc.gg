@@ -1,110 +1,50 @@
+import { GamerAPI } from '../api/gamers'
 import { Gamer } from '../types/core'
 
 export class GamerStore {
-    public gamers: Gamer[] = [
-        {
-            id: 'blues',
-            name: 'Blues',
-            points: 40,
-        },
-        {
-            id: 'dex',
-            name: 'Dex',
-            points: 0,
-        },
-        {
-            id: 'dom',
-            name: 'Dom',
-            points: 0,
-        },
-        {
-            id: 'chubby',
-            name: 'Chubby',
-            points: 0,
-        },
-        {
-            id: 'fen',
-            name: 'Fen',
-            points: 0,
-        },
-        {
-            id: 'foppy',
-            name: 'Foppy',
-            points: 0,
-        },
-        {
-            id: 'gearetical',
-            name: 'Gear',
-            points: 0,
-        },
-        {
-            id: 'king',
-            name: 'King',
-            points: 0,
-        },
-        {
-            id: 'mykey',
-            name: 'Mykey',
-            points: 0,
-        },
-        {
-            id: 'llama',
-            name: 'Llama',
-            points: 0,
-        },
-        {
-            id: 'logi',
-            name: 'Logi',
-            points: 0,
-        },
-        {
-            id: 'pasta',
-            name: 'Pasta',
-            points: 0,
-        },
-        {
-            id: 'puff',
-            name: 'Puff',
-            points: 99999,
-        },
-        {
-            id: 'ryuu',
-            name: 'Ryuu',
-            points: 1000
-        },
-        {
-            id: 'soul',
-            name: 'Soul',
-            points: 0,
-        },
-        {
-            id: 'styles',
-            name: 'Styles',
-            points: 0,
-        },
-        {
-            id: 'thunder',
-            name: 'Thunder',
-            points: 0,
-        },
-        {
-            id: 'tux',
-            name: 'Tux',
-            points: 0,
-        },
-        {
-            id: 'xjago8',
-            name: 'Xjago8',
-            points: 0,
-        },
-        {
-            id: 'zeddby',
-            name: 'Zeddby',
-            points: 0,
-        },
-    ]
+    public gamers: Gamer[] = []
+    public defaultGamer: Gamer = {
+        id: '',
+        name: '',
+        color: 'zara.100',
+        points: 0
+    }
 
-    public getGamers = () => {
-        return this.gamers
+    private points: number = -1
+    
+    public async getGamers() {
+        try {
+            const gamers = await GamerAPI.getGamers()  
+            this.initGamers(gamers)
+            return gamers
+        }
+        catch (err) {
+            this.gamers = []
+            console.error(err)
+        }
+    }
+
+    private async initGamers(data: Gamer[]) {
+        this.gamers = []
+        data?.map((gamer: Gamer) => {
+            const points = this.getPoints(gamer.id)
+            this.gamers.push({
+                id: gamer.id,
+                name: gamer.name,
+                color: gamer.color,
+                points: 0
+            })
+        })
+    }
+
+    public async getPoints(gamerId: string) {
+        try {
+            const points: number = await GamerAPI.getPoints(gamerId)
+            return points
+        }
+        catch (err) {
+            console.error(err)
+            return 0
+        }
     }
 }

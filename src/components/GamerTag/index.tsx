@@ -11,8 +11,8 @@ export const GamerTag: FC<IGamerTagProps> = ({
 }) => {
     return (
         <GamerBox>
-            <GamerText
-                color={`${gamer.id}`}
-            >{gamer.name}</GamerText>
+            <GamerText color={gamer.color}>
+                {gamer.name}
+            </GamerText>
         </GamerBox>
 )}

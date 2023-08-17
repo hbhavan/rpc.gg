@@ -1,23 +1,22 @@
-import { Flex, Popover, PopoverContent, PopoverTrigger } from '@chakra-ui/react'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { GamerTag } from '../../components/GamerTag'
-import { gamerStore } from '../../stores'
+import { Popover, PopoverTrigger } from '@chakra-ui/react'
+import { Dispatch, FC, SetStateAction } from 'react'
+import { GamerTag } from '../GamerTag'
 import { Gamer } from '../../types/core'
 import { GamerSelectButton, GamerSelectButtonContainer, GamerSelectOption, GamerSelectPopoverContainer, GamerSelectPopoverContent, GamerSelectText } from './styles'
 
 interface GamerSelectProps {
+    gamers: Gamer[],
     selected: Gamer[],
     setSelected: Dispatch<SetStateAction<Gamer[]>>,
     onChange: () => void
 }
 
 export const GamerSelect: FC<GamerSelectProps> = ({
+    gamers,
     selected,
     setSelected,
     onChange
 }) => {
-
-    const gamers = gamerStore.getGamers()
 
     const getSelectedGamers = (): Gamer[] => {
         return (

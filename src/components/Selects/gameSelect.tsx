@@ -1,5 +1,5 @@
-import { Box, Popover, PopoverContent, PopoverTrigger, useDisclosure } from '@chakra-ui/react'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import {Popover, PopoverTrigger } from '@chakra-ui/react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { gameStore } from '../../stores'
 import { Game } from '../../types/core'
 import { GamerSelectButton, GamerSelectButtonContainer, GamerSelectOption, GamerSelectPopoverContent, GamerSelectText } from './styles'
@@ -16,7 +16,21 @@ export const GameSelect: FC<GameSelectProps> = ({
     onChange
 }) => {
 
-    const games = gameStore.getGameList()
+    const [gameList, setGameList] = useState<Game[]>([])
+
+    useEffect(() => {
+        async function getGames() {
+            try {
+                const data = await gameStore.getGameList()
+                setGameList(data)
+            } catch (err) {
+                console.error(err)
+                setGameList([])
+            }
+        }
+
+        getGames()
+    }, [])
 
     return (
         <Popover
@@ -38,7 +52,7 @@ export const GameSelect: FC<GameSelectProps> = ({
                 </GamerSelectButton>    
             </PopoverTrigger>    
             <GamerSelectPopoverContent>
-                {games.map((game) => (
+                {gameList.map((game) => (
                     <GamerSelectOption
                         width="100%"
                         padding="8px"

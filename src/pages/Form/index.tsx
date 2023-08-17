@@ -1,10 +1,12 @@
 import { Link, Flex, FormControl, Spacer } from "@chakra-ui/react"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import { NavMenu } from "../../components/NavMenu"
-import { Game, Gamer } from "../../types/core"
+import { gamerStore, sessionStore } from "../../stores"
+import { Game, Gamer, Session } from "../../types/core"
 import { AddButton } from "./addButton"
-import { GamerSelect } from "./gamerSelect"
-import { GameSelect } from "./gameSelect"
+import { GamerSelect } from "../../components/Selects/gamerSelect"
+import { GameSelect } from "../../components/Selects/gameSelect"
+import { toJS } from 'mobx'
 import { FormContainer, FPFormLabel, FPInput, FPSubmit, InputContainer, InputRow, MainContainer, Title } from "./styles"
 
 interface FormValues {
@@ -32,6 +34,14 @@ export const FormPage = () => {
     })
     const [addEggs, setAddEggs] = useState('')
 
+    const gamers = toJS(gamerStore.gamers)
+
+    const handleAddClick = (value: string) => {
+        if (value === '') 
+            return '1'
+        return '' + (parseInt(value) + 1)
+    }
+
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
@@ -49,13 +59,24 @@ export const FormPage = () => {
 
     const handleAddEggsClick = (eggs: string) => {
         const addEggs = (parseInt(formData.eggs) + parseInt(eggs))
-        if (typeof addEggs === 'number' && addEggs > 0) {
+        if (formData.eggs === '') {
             setFormData({
                 ...formData,
-                eggs: '' + addEggs
+                eggs: eggs
             })
-            setAddEggs('')
+        } else if (addEggs > 0) {
+            if (formData.eggs === '') {
+                setFormData({
+                    ...formData,
+                    eggs: eggs
+                })
+            } else if (typeof addEggs === 'number') {
+                setFormData({
+                    ...formData,
+                    eggs: '' + addEggs
+            })}            
         }
+        setAddEggs('')
     }
 
     const handleSelectGame = () => {
@@ -84,9 +105,9 @@ export const FormPage = () => {
             valid = false
         }
         if (
-            parseInt(formData.sessions) < 0 &&
-            parseInt(formData.wins) < 0 &&
-            parseInt(formData.losses) < 0 &&
+            parseInt(formData.sessions) < 0 ||
+            parseInt(formData.wins) < 0 ||
+            parseInt(formData.losses) < 0 ||
             parseInt(formData.eggs) < 0
         ) {
             alert("Select a valid number")
@@ -94,9 +115,46 @@ export const FormPage = () => {
         }
         if (valid) {
             alert("Submitted")
+            clearData()
+            postData()
         }
-        console.log(formData)
     }
+
+    const clearData = () => {
+        setFormData({
+            game: {id: '', name: ''},
+            sessions: '',
+            wins: '',
+            losses: '',
+            eggs: '',
+            gamers: []
+        })
+        setSelectedGame({id: '', name: ''})
+        setSelectedGamer([])
+    }
+
+    async function postData() {
+        const curDate = new Date()
+        try {
+            const response = await sessionStore.submitSession({
+                gameId: formData.game.id,
+                wins: parseInt(formData.wins),
+                losses: parseInt(formData.losses),
+                eggs: parseInt(formData.eggs),
+                sessions: parseInt(formData.sessions),
+                date: curDate,
+                gamers: formData.gamers
+            })
+            return response
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    useEffect(() => {
+        gamerStore.getGamers()
+
+    }, [])
 
     return (
         <MainContainer>
@@ -106,7 +164,7 @@ export const FormPage = () => {
                     Add A Session
                 </Title>
                 <InputContainer>
-                    <FormControl isRequired>
+                    <FormControl>
                         <FPFormLabel>Game</FPFormLabel>
                         <GameSelect
                             selected={selectedGame}
@@ -114,7 +172,7 @@ export const FormPage = () => {
                             onChange={handleSelectGame}
                         />
                     </FormControl>
-                    <FormControl isRequired>
+                    <FormControl>
                         <Flex flexDir="row">
                             <FPFormLabel>Friends</FPFormLabel>
                             <Spacer />
@@ -129,13 +187,14 @@ export const FormPage = () => {
                                 Clear
                             </Link>
                         </Flex>
-                        <GamerSelect 
+                        <GamerSelect
+                            gamers={gamers}
                             selected={selectedGamer}
                             setSelected={setSelectedGamer}
                             onChange={handleSelectGamer}
                         />
                     </FormControl>
-                    <FormControl isRequired>
+                    <FormControl>
                         <FPFormLabel>Sessions</FPFormLabel>
                         <InputRow>
                             <FPInput 
@@ -147,12 +206,12 @@ export const FormPage = () => {
                             <AddButton
                                 onClick={() => setFormData({
                                     ...formData,
-                                    sessions: '' + (parseInt(formData.sessions) + 1)
+                                    sessions: handleAddClick(formData.sessions)
                                 })} 
                             />
                         </InputRow>
                     </FormControl>
-                    <FormControl isRequired>
+                    <FormControl>
                         <FPFormLabel>Victories</FPFormLabel>
                         <InputRow>
                             <FPInput 
@@ -164,12 +223,12 @@ export const FormPage = () => {
                             <AddButton
                                 onClick={() => setFormData({
                                     ...formData,
-                                    wins: '' + (parseInt(formData.wins) + 1)
+                                    wins: handleAddClick(formData.wins)
                                 })} 
                             />
                         </InputRow>
                     </FormControl>
-                    <FormControl isRequired>
+                    <FormControl>
                         <FPFormLabel>Losses</FPFormLabel>
                         <InputRow>
                             <FPInput 
@@ -181,7 +240,7 @@ export const FormPage = () => {
                             <AddButton
                                 onClick={() => setFormData({
                                     ...formData,
-                                    losses: '' + (parseInt(formData.losses) + 1)
+                                    losses: handleAddClick(formData.losses)
                                 })} 
                             />
                         </InputRow>
