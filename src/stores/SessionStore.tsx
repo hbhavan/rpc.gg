@@ -1,6 +1,5 @@
 import { toastStore } from '.'
 import { SessionAPI } from '../api/session'
-import { useCustomToast } from '../components/Hooks/useCustomToast'
 import { Session } from '../types/core'
 
 export class SessionStore {
