@@ -2,7 +2,7 @@ import { Flex, Box, Heading, Text } from '@chakra-ui/react'
 import { chakra } from '../../utils/chakra'
 
 export const HomeContainer = chakra(Flex, {
-    flexDir: 'column',
+    flexDir: 'row',
     width: '100%',
     maxWidth: '100vw',
     height: '100vh',
@@ -15,6 +15,7 @@ export const HomeContainer = chakra(Flex, {
 
 export const TitleContainer = chakra(Flex, {
     flexDir: 'column',
+    height: '100%',
 })
 
 export const Title = chakra(Heading, {
@@ -29,10 +30,16 @@ export const SubTitle = chakra(Heading, {
     color: 'zara.200',
 })
 
+export const MainText = chakra(Text, {
+    fontSize: '1rem',
+    color: 'zara.200'
+})
+
 export const MainContainer = chakra(Flex, {
     height: '100%',
-    width: '100%',
+    width: '70%',
     justifyContent: 'center',
+    alignItems: 'center'
 })
 
 export const RankingContainer = chakra(Flex, {

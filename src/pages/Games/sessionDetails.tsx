@@ -49,16 +49,16 @@ export const SessionDetails: FC<ISessionDetailsProps> = ({
                 >
                     <SessionStats>
                     <SessionDetailTitle>
-                        {'Session ' + (i + 1)}
+                        {'Session ' + (sessions.length - i)}
                     </SessionDetailTitle>
+                    <SessionDetailText>
+                        {'Sessions: ' + session.sessions}
+                    </SessionDetailText>
                     <SessionDetailText>
                         {'Wins: ' + session.wins}
                     </SessionDetailText>
                     <SessionDetailText>
-                        {'Losses: ' + session.losses}
-                    </SessionDetailText>
-                    <SessionDetailText>
-                        {'Sessions: ' + session.sessions}
+                        {'Losses: ' + session.losses} 
                     </SessionDetailText>
                     <SessionDetailText>
                         {'Eggs: ' + session.eggs}

@@ -1,7 +1,8 @@
 export const routes = {
+    default: '/',
     home: '/rpc',
-    form: '/addSession',
-    games: '/games'
+    form: '/rpc/addSession',
+    games: '/rpc/games'
 }
 
 
