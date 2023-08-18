@@ -1,8 +1,8 @@
 import { Link, Flex, FormControl, Spacer } from "@chakra-ui/react"
 import { ChangeEvent, useEffect, useState } from "react"
 import { NavMenu } from "../../components/NavMenu"
-import { gamerStore, sessionStore } from "../../stores"
-import { Game, Gamer, Session } from "../../types/core"
+import { gamerStore, sessionStore, toastStore } from "../../stores"
+import { Game, Gamer } from "../../types/core"
 import { AddButton } from "./addButton"
 import { GamerSelect } from "../../components/Selects/gamerSelect"
 import { GameSelect } from "../../components/Selects/gameSelect"
@@ -79,13 +79,6 @@ export const FormPage = () => {
         setAddEggs('')
     }
 
-    const handleSelectGame = () => {
-        setFormData({
-            ...formData,
-            game: selectedGame
-        })
-    }
-
     const handleSelectGamer = () => {
         setFormData({
             ...formData,
@@ -96,12 +89,12 @@ export const FormPage = () => {
     const handleSubmit = () => {
         let valid = true
         if (formData.game.id === '') {
-            alert("Select a game")
+            toastStore.customErrorToast("Select a game")
             valid = false
         }
 
         if (formData.gamers.length < 3) {
-            alert("Select at least 3 gamers")
+            toastStore.customErrorToast("Select at least 3 gamers")
             valid = false
         }
         if (
@@ -110,11 +103,10 @@ export const FormPage = () => {
             parseInt(formData.losses) < 0 ||
             parseInt(formData.eggs) < 0
         ) {
-            alert("Select a valid number")
+            toastStore.customErrorToast("Enter a valid number")
             valid = false
         }
         if (valid) {
-            alert("Submitted")
             clearData()
             postData()
         }
@@ -147,7 +139,7 @@ export const FormPage = () => {
             })
             return response
         } catch (err) {
-            console.error(err)
+            toastStore.errorToast(err)
         }
     }
 
@@ -155,6 +147,13 @@ export const FormPage = () => {
         gamerStore.getGamers()
 
     }, [])
+
+    useEffect(() => {
+        setFormData({
+            ...formData,
+            game: selectedGame
+        })
+    }, [selectedGame])
 
     return (
         <MainContainer>
@@ -169,7 +168,6 @@ export const FormPage = () => {
                         <GameSelect
                             selected={selectedGame}
                             setSelected={setSelectedGame}
-                            onChange={handleSelectGame}
                         />
                     </FormControl>
                     <FormControl>

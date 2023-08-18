@@ -67,6 +67,7 @@ export const GamerSelect: FC<GamerSelectProps> = ({
                     {gamers.map((gamer) => (
                         <GamerSelectOption
                             key={gamer.id}
+                            justifyContent="center"
                             color={selected.includes(gamer) ? 'zara.100' : 'zara.300' }
                             fontWeight={selected.includes(gamer) ? 'bold' : 'normal'}
                             onClick={() => handleClick(gamer)}

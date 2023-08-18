@@ -1,4 +1,4 @@
-import {Popover, PopoverTrigger } from '@chakra-ui/react'
+import {Popover, PopoverTrigger, useDisclosure } from '@chakra-ui/react'
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 import { gameStore } from '../../stores'
 import { Game } from '../../types/core'
@@ -7,16 +7,15 @@ import { GamerSelectButton, GamerSelectButtonContainer, GamerSelectOption, Gamer
 interface GameSelectProps {
     selected: Game,
     setSelected: Dispatch<SetStateAction<Game>>,
-    onChange: () => void
 }
 
 export const GameSelect: FC<GameSelectProps> = ({
     selected,
     setSelected,
-    onChange
 }) => {
 
     const [gameList, setGameList] = useState<Game[]>([])
+    const {isOpen, onOpen, onClose} = useDisclosure()
 
     useEffect(() => {
         async function getGames() {
@@ -34,11 +33,13 @@ export const GameSelect: FC<GameSelectProps> = ({
 
     return (
         <Popover
-            onClose={onChange}
+            isOpen={isOpen}
             closeOnBlur
         >
             <PopoverTrigger>
-                <GamerSelectButton>
+                <GamerSelectButton
+                    onClick={onOpen}
+                >
                     <GamerSelectButtonContainer>
                         <GamerSelectText
                             color={selected.id === '' ? 'zara.50' : 'zara.200'}
@@ -59,7 +60,10 @@ export const GameSelect: FC<GameSelectProps> = ({
                         key={game.id}
                         color={selected === game ? 'zara.100' : 'zara.300' }
                         fontWeight={selected === game ? 'bold' : 'normal'}
-                        onClick={() => setSelected(game)}
+                        onClick={() => {
+                            setSelected(game)
+                            onClose()
+                        }}
                     >
                         {game.name}
                     </GamerSelectOption>))}

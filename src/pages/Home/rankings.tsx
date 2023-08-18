@@ -38,7 +38,7 @@ export const Rankings = observer(() => {
 
     return (
         <RankingContainer>
-            {gamers.sort((a, b) => (
+            {!!gamers && gamers.sort((a, b) => (
                 a.points < b.points ? 1 : -1
             )).map((gamer) => (
                 <RankingRow

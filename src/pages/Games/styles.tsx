@@ -1,4 +1,4 @@
-import { Flex, Heading, Text } from '@chakra-ui/react'
+import { Flex, Heading, IconButton, Text } from '@chakra-ui/react'
 import { chakra } from '../../utils/chakra'
 
 export const MainContainer = chakra(Flex, {
@@ -7,7 +7,7 @@ export const MainContainer = chakra(Flex, {
     maxWidth: '100vw',
     height: '100vh',
     maxHeight: '100vh',
-    bg: 'zara.400',
+    background: 'zara.400',
     padding: '2.5rem',
     fontFamily: 'Consolas',
     overflow: 'auto', 
@@ -47,7 +47,8 @@ export const SessionDetailContainer = chakra(Flex, {
 
 export const SessionDetail = chakra(Flex, {
     flexDir: 'row',
-    width: '30rem',
+    minWidth: '30rem',
+    width: 'fit-content',
     height: '20rem',
     border: '2px',
     borderColor: 'zara.100',
@@ -58,17 +59,17 @@ export const SessionDetail = chakra(Flex, {
 
 export const SessionStats = chakra(Flex, {
     flexDir: 'column',
-    width: '50%'
+    width: '60%',
 })
 export const SessionFriends = chakra(Flex, {
     flexDir: 'column',
-    width: '50%'
+    width: '40%'
 })
 
 export const GamerTagContainer = chakra(Flex, {
     flexDir: 'column',
-    flexWrap: 'wrap',
     gap: 2,
+    overflow: 'auto'
 })
 
 export const SessionDetailTitle = chakra(Heading, {
@@ -80,4 +81,15 @@ export const SessionDetailTitle = chakra(Heading, {
 export const SessionDetailText = chakra(Text, {
     color: 'zara.100',
     fontSize: '1.5rem'
+})
+
+export const DeleteButton = chakra(IconButton, {
+    width: '20%',
+    marginBottom: '0.5rem',
+    borderColor: 'zara.300',
+    focusBorderColor: 'zara.200',
+    color: 'zara.500',
+    backgroundColor: 'zara.100',
+    variant: 'outline',
+    _hover: {backgroundColor: 'zara.300'}
 })

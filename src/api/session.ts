@@ -12,4 +12,9 @@ export class SessionAPI {
         const { data = {} } = await sessionInstance.get(`?gameId=${gameId}`)
         return data
     }
+
+    static async deleteSession(sessionId: string) {
+        const response = await sessionInstance.delete(`?sessionId=${sessionId}`)
+        return response
+    }
 }

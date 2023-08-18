@@ -35,6 +35,7 @@ export const GamerSelectText = chakra(Text, {
 export const GamerSelectPopoverContent = chakra(PopoverContent, {
     borderColor: "zara.100",
     borderWidth: "3px",
+    backgroundColor: 'zara.400'
 })
 
 export const GamerSelectPopoverContainer = chakra(Flex, {

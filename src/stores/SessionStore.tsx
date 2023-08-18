@@ -1,4 +1,6 @@
+import { toastStore } from '.'
 import { SessionAPI } from '../api/session'
+import { useCustomToast } from '../components/Hooks/useCustomToast'
 import { Session } from '../types/core'
 
 export class SessionStore {
@@ -34,10 +36,20 @@ export class SessionStore {
                 gamers: session.gamers,
                 date: session.date
             }
-            console.log(data)
             await SessionAPI.postSession(data)
+            toastStore.submitToast()
+        } catch (err) {
+            toastStore.errorToast(err)
+        }
+    }
+
+    public async deleteSession(sessionId: string) {
+        try {
+            await SessionAPI.deleteSession(sessionId)
+            toastStore.submitToast()
         } catch (err) {
             console.error(err)
+            toastStore.errorToast(err)
         }
     }
 }

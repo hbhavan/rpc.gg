@@ -7,9 +7,10 @@ export const HomeContainer = chakra(Flex, {
     maxWidth: '100vw',
     height: '100vh',
     maxHeight: '100vh',
-    bg: 'zara.400',
+    background: 'zara.400',
     padding: '2.5rem',
-    fontFamily: 'Consolas' 
+    fontFamily: 'Consolas',
+    overflow: 'auto',  
 })
 
 export const TitleContainer = chakra(Flex, {

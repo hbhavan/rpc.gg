@@ -9,8 +9,6 @@ export class GamerStore {
         color: 'zara.100',
         points: 0
     }
-
-    private points: number = -1
     
     public async getGamers() {
         try {

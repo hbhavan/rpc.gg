@@ -1,13 +1,14 @@
-import { Flex, Heading, FormLabel, Input, Select, Button, Text, PopoverContent } from '@chakra-ui/react'
+import { Flex, Heading, FormLabel, Input, Button, } from '@chakra-ui/react'
 import { chakra } from '../../utils/chakra'
 
 export const MainContainer = chakra(Flex, {
     width: '100%',
     maxWidth: '100vw',
     height: '100vh',
-    bg: 'zara.400',
+    background: 'zara.400',
     padding: '2.5rem',
     fontFamily: 'Consolas',
+    overflow: 'auto'
 })
 
 export const FormContainer = chakra(Flex, {

@@ -1,13 +1,15 @@
+import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 import { NavMenu } from '../../components/NavMenu'
 import { GameSelect } from '../../components/Selects/gameSelect'
-import { sessionStore } from '../../stores'
+import { sessionStore, toastStore } from '../../stores'
 import { Game, Session } from '../../types/core'
 import { Title } from '../Form/styles'
 import { SessionDetails } from './sessionDetails'
 import { MainContainer, SelectContainer, SessionsContainer, SubTitle, TitleContainer } from './styles'
 
-export const GamesPage = () => {
+export const GamesPage = observer(() => {
+
     const [selectedGame, setSelectedGame] = useState<Game>({
         id: '',
         name: '',
@@ -15,20 +17,24 @@ export const GamesPage = () => {
 
     const [sessions, setSessions] = useState<Session[]>([])
 
-    const handleSelectGame = () => {
-        getSessions(selectedGame.id)
+    async function fetchSessions(gameId: string) {
+        try {
+            if(gameId !== '') {
+                const data = await sessionStore.getSessions(gameId)
+                setSessions(data)
+                return data
+            }
+        } catch (err) {
+            toastStore.errorToast(err)
+        }
     }
 
-    async function getSessions(gameId: string) {
-        try {
-            const data = await sessionStore.getSessions(gameId)
-            setSessions(data)
-            return data
-        } catch (err) {
-            console.error(err)
-        }
-    }  
-
+    useEffect(() => {
+        fetchSessions(selectedGame.id).then(response => {
+            setSessions(response)
+        })
+    }, [selectedGame])
+    
     return (
         <MainContainer>
             <NavMenu page="games"/>
@@ -43,14 +49,14 @@ export const GamesPage = () => {
                     <GameSelect 
                         selected={selectedGame}
                         setSelected={setSelectedGame}
-                        onChange={handleSelectGame}
                     />
                 </SelectContainer>
             </TitleContainer>
             <SessionsContainer>
                 <SessionDetails
                     sessions={sessions}
+                    setSessions={setSessions}
                 />
             </SessionsContainer>
         </MainContainer>
-)}
+)})
