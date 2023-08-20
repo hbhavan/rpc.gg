@@ -2,8 +2,8 @@ import { GameAPI } from '../api/games'
 import { Game } from '../types/core'
 
 export class GamesStore {
-
     public gameList: Game[] = []
+    public loading: boolean = false
 
     public default: Game = {
         id: '',
@@ -27,5 +27,9 @@ export class GamesStore {
         )
         if(!!game) return game
         else return this.default
+    }
+
+    public initLoading(isLoading: boolean) {
+        this.loading = isLoading
     }
 }

@@ -1,12 +1,16 @@
 import { GamerTag } from '../../components/GamerTag'
 import { gamerStore } from '../../stores'
 import { observer } from 'mobx-react-lite'
-import { Points, PointsBox, RankingContainer, RankingRow } from './styles'
+import { MainText, Points, PointsBox, RankingContainer, RankingRow } from './styles'
 import { useEffect, useState } from 'react'
 import { Gamer } from '../../types/core'
+import { Spinner } from '@chakra-ui/react'
+import { toJS } from 'mobx'
 
 export const Rankings = observer(() => {
     const [gamers, setGamers] = useState<Gamer[]>([])
+
+    const loading = toJS(gamerStore.loading)
 
     useEffect(() => {
         async function fetchGamers() {
@@ -21,12 +25,14 @@ export const Rankings = observer(() => {
 
         async function getGamersAndPoints() {
             try {
+                gamerStore.initLoading(true)
                 const gamerData = await fetchGamers()
                 const gamerDataWithPoints = await Promise.all(gamerData.map(async gamer => {
                     const pointsData = await fetchPoints(gamer.id)
                     return {...gamer, points: pointsData}
                 }))
                 setGamers(gamerDataWithPoints)
+                gamerStore.initLoading(false)
             } catch (err) {
                 console.error(err)
                 setGamers([])
@@ -38,6 +44,14 @@ export const Rankings = observer(() => {
 
     return (
         <RankingContainer>
+            {loading ? 
+                <>
+                    <MainText>Loading...<Spinner/> </MainText>
+                    
+                </>
+                : 
+                <></>
+            }
             {!!gamers && gamers.sort((a, b) => (
                 a.points < b.points ? 1 : -1
             )).map((gamer) => (

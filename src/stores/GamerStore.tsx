@@ -3,6 +3,7 @@ import { Gamer } from '../types/core'
 
 export class GamerStore {
     public gamers: Gamer[] = []
+    public loading: boolean = false
     public defaultGamer: Gamer = {
         id: '',
         name: '',
@@ -25,7 +26,6 @@ export class GamerStore {
     private async initGamers(data: Gamer[]) {
         this.gamers = []
         data?.map((gamer: Gamer) => {
-            const points = this.getPoints(gamer.id)
             this.gamers.push({
                 id: gamer.id,
                 name: gamer.name,
@@ -44,5 +44,9 @@ export class GamerStore {
             console.error(err)
             return 0
         }
+    }
+
+    public initLoading(isLoading: boolean) {
+        this.loading = isLoading
     }
 }
