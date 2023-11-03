@@ -93,7 +93,7 @@ export const FormPage = () => {
             valid = false
         }
 
-        if (formData.gamers.length < 3) {
+        if (formData.gamers.length < 3 && formData.game.name != "Wheel Spin") {
             toastStore.customErrorToast("Select at least 3 gamers")
             valid = false
         }
