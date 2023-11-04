@@ -100,8 +100,7 @@ export const FormPage = () => {
         if (
             parseInt(formData.sessions) < 0 ||
             parseInt(formData.wins) < 0 ||
-            parseInt(formData.losses) < 0 ||
-            parseInt(formData.eggs) < 0
+            parseInt(formData.losses) < 0 
         ) {
             toastStore.customErrorToast("Enter a valid number")
             valid = false
