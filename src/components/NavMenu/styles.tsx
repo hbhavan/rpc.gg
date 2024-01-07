@@ -8,7 +8,7 @@ export const NavContainer = chakra(Flex, {
 })
 
 export const NavLinkBox = chakra(Box, {
-    width: '5rem',
+    width: '7rem',
     textAlign: 'center'
 })
 

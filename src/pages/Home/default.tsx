@@ -21,11 +21,11 @@ export const DefaultPage = () => {
                 </SubTitle>
                 <NavLink
                     onClick={() => {
-                        navigate('/rpc')
+                        navigate('/rpc/friendPoints2023')
                     }}
                     color="zara.300"
                 >
-                    {'[gearetical.com/rpc]'}
+                    {'[gearetical.com/rpc/friendPoints2023]'}
                 </NavLink>
         </HomeContainer>
 )}

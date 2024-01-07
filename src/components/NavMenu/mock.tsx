@@ -7,13 +7,18 @@ export const navLinks = [
         nav: routes.home,
     },
     {
-        id: 'form',
-        name: 'Submit',
-        nav: routes.form,
-    },
-    {
-        id: 'games',
-        name: 'Games',
-        nav: routes.games,
+        id: 'friendPoints2023',
+        name: 'FP 2023',
+        nav: routes.friendPoints2023
     }
+    // {
+    //     id: 'form',
+    //     name: 'Submit',
+    //     nav: routes.form,
+    // },
+    // {
+    //     id: 'games',
+    //     name: 'Games',
+    //     nav: routes.games,
+    // }
 ]

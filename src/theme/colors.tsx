@@ -14,11 +14,14 @@ export const colors = {
     chubby: '#8b5ce4',
     fen: '#b50054',
     foppy: '#274af9',
+    foram: '#728c69',
     gearetical: '#ffce00',
     king: '#6f27b3',
     mykey: '#6e5499',
     llama: '#cd7ec3',
     logi: '#ffbfff', 
+    lottie: '#804f28',
+    pam: '#604b62',
     pasta: '#942f27',
     puff: '#b5c5d6',
     ryuu: '#e499ff',
@@ -27,7 +30,7 @@ export const colors = {
     thunder: '#737373',
     tux: '#ff3300',
     xjago8: '#00c8b4',
-    zeddby: '#34696f'
+    zeddby: '#34696f',
 }
 
 export const semanticTokens = {
